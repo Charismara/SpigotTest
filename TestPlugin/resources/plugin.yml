@@ -1,5 +1,13 @@
+main: de.raoulis.testplugin.Main
 name: TestPlugin
-main: de.raoulis.testplugin
 version: 0.0.1
-authors: Christian [MrProfessor]
-prefix: [TestPlugin]
+author: Christian [MrProfessor]
+prefix: TestPlugin
+description: A Simple Test Plugin.
+commands:
+  ustats:
+    description: Gibt dir Informationen über dich.
+    usage: /ustats
+    permission: testplugin.basic
+    permission-message: Du hast keine Rechte um diesen Befehl auszufühen.
+    aliases: [userstat, userstats]

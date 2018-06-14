@@ -23,11 +23,12 @@ public class Commands implements CommandExecutor {
 							
 				sender.sendMessage("Dein Username ist " + PlayerStats.getUsername(player));
 				sender.sendMessage("Deine UUID ist " + PlayerStats.getUUID(player));
-				sender.sendMessage("Deine Spielzeit ist " + PlayerStats.getPlaytime(player));
 				try {
+					sender.sendMessage("Deine Spielzeit ist " + PlayerStats.getPlaytime(player));
 					sender.sendMessage("Erster Join: " + PlayerStats.getFirstJoin(player, 1) + " um " + PlayerStats.getFirstJoin(player, 2) + " Uhr");
-				} catch (Exception e) {
-					e.printStackTrace();
+					
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
 				sender.sendMessage("Du bist " + PlayerStats.getWalked(player) + " Meter gelaufen");
 				sender.sendMessage("Du hast " + PlayerStats.getKilledMobs(player) + " Kreaturen get\u00f6tet");

@@ -1,11 +1,13 @@
 package de.raoulis.testplugin.PlayerInfo;
 
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
-import de.raoulis.testplugin.handler.FileHandler;
 import de.raoulis.testplugin.handler.PlayerDataHandler;
 
 public class PlayerStats {
@@ -20,11 +22,17 @@ public class PlayerStats {
 		return uuid;
 	}
 
-	public static String getPlaytime(Player player) {
-
-		String playtime = String.valueOf(player.getStatistic(Statistic.RECORD_PLAYED));
-		;
-		return playtime;
+	public static String getPlaytime(Player player) throws Exception {
+		
+		String playtime = PlayerDataHandler.getDataFromFile(player, "playtime", PlayerDataHandler.USERDATA);
+		
+		long t = Long.parseLong(playtime);
+		Date d = new Date(t - TimeUnit.HOURS.toMillis(1));
+		
+		DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");		
+		String ptime = formatter.format(d);
+		
+		return ptime.substring(0, 8);
 	}
 
 	public static String getWalked(Player player) {
@@ -43,33 +51,20 @@ public class PlayerStats {
 		return mobs;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static String getFirstJoin(Player player, int type) throws Exception {
-		String uuid = getUUID(player);
-		// Get Data with UUID
-		Map<String, Map<String, String>> data_full = (Map<String, Map<String, String>>) FileHandler
-				.load(PlayerDataHandler.USERDATA);
-		// Get Data from UUID
-		Map<String, String> data = data_full.get(uuid);
+		String date_time = PlayerDataHandler.getDataFromFile(player, "firstjoin", PlayerDataHandler.USERDATA);
 
-		String date_time = data.get("frist_join");
-		
-		if(date_time == null) {
-			PlayerDataHandler.LOGGER.info(data_full.toString());
-			PlayerDataHandler.LOGGER.info(data.toString());
-			PlayerDataHandler.LOGGER.info(date_time);
-			return null;
-		}
 		if (type == 1) {
-			//return Date
-			String date = date_time.substring(0, 13);
+			// return Date
+			String date = date_time.substring(0, 10);
 			return date;
-		} if (type == 2) {
-			//return time
-			String time = date_time.substring(11);
+		}
+		if (type == 2) {
+			// return time
+			String time = date_time.substring(11, 19);
 			return time;
 		} else {
-			//return "date" + "T" + "time"
+			// return "date" + "T" + "time"
 			return date_time;
 		}
 	}
