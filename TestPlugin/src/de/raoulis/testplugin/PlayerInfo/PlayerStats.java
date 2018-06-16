@@ -25,8 +25,18 @@ public class PlayerStats {
 	public static String getPlaytime(Player player) throws Exception {
 		
 		String playtime = PlayerDataHandler.getDataFromFile(player, "playtime", PlayerDataHandler.USERDATA);
+		//old playtime
+		long t0 = Long.parseLong(playtime);
+		//last join
+		long t1 = Long.parseLong(PlayerDataHandler.getDataFromFile(player, "join", PlayerDataHandler.USERDATA));
+		//current  time
+		long t2 = System.currentTimeMillis();
+		//current playtime 
+		long t3 = t2 - t1;
+		//new playtime
+		long t = t0 + t3;
 		
-		long t = Long.parseLong(playtime);
+		//convert into a HH:mm:ss format
 		Date d = new Date(t - TimeUnit.HOURS.toMillis(1));
 		
 		DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");		

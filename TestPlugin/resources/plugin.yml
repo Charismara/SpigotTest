@@ -1,6 +1,6 @@
 main: de.raoulis.testplugin.Main
 name: TestPlugin
-version: 0.0.1
+version: 0.0.2
 author: Christian [MrProfessor]
 prefix: TestPlugin
 description: A Simple Test Plugin.
@@ -8,6 +8,47 @@ commands:
   ustats:
     description: Gibt dir Informationen über dich.
     usage: /ustats
-    permission: testplugin.basic
+    permission: testplugin.ustats
     permission-message: Du hast keine Rechte um diesen Befehl auszufühen.
-    aliases: [userstat, userstats]
+    aliases:
+    - userstat
+    - userstats
+  ttp:
+    description: Test Permission Manager
+    usage: /ttp {player} {x} {y} {z}
+    permission: testplugin.ttp
+    permission-message: Du hast keine Rechte um diesen Befehl auszufühen.
+    aliases:
+    - permmanager
+    - permanager
+    - permissionmanager
+  party:
+    description: Erstelle ingame Gruppen
+    usage: /party {argument} [{argument}]
+    permission: testplugin.groups
+    permission-message: Du hast keine Rechte um diesen Befehl auszufühen.
+    aliases:
+    - group
+    - groups
+permissions:
+  testplugin.basic:
+    description: Basic permissions.
+    children:
+      testplugin.ustats: true
+      testplugin.ttp: false
+      testplugin.groups: true
+  testplugin.*:
+    description: Zugriff auf alles.
+    children:
+      testplugin.ustats: true
+      testplugin.ttp: true
+      testplugin.groups: true
+  testplugin.ustats:
+    description: User stats.
+    default: true
+  testplugin.ttp:
+    description: Test Teleport.
+    default: op
+  testplugin.groups:
+    description: Test Groups.
+    default: true

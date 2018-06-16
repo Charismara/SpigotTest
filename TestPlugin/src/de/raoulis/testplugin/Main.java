@@ -29,7 +29,10 @@ public class Main extends JavaPlugin{
 	public void load() {
 		TestEventHandler.onServerStart();
 		getServer().getPluginManager().registerEvents(new TestEventHandler(), this);
+		
 		getCommand("ustats").setExecutor(new Commands());
+		//getCommand("tpp").setExecutor(new Commands());
+		getCommand("party").setExecutor(new Commands());
 	}
 	
 	public Plugin getPlugin() {
